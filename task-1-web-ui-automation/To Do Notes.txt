@@ -7,10 +7,10 @@ Define Scope Of Testing [Done]
 =======================
 We will test the home page (books) functionalities which include
 - search for a book listing
----- a valid book listing
----- an invalid book listing
+---- a valid book listing -> done
+---- an invalid book listing -> done
 
-- go to login page
+- go to login page -> done
 
 - select a book listing
 
