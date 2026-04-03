@@ -15,8 +15,8 @@ export class SearchBoxPageObject extends BasePage {
   }
 
   async pageObjectTests(): Promise<void> {
-    await expect(this.searchTextBox).toBeVisible();
-    await expect(this.searchButton).toBeVisible();
+    await expect(this.searchTextBox, 'Search text box is not visible').toBeVisible();
+    await expect(this.searchButton, 'Search button is not visible').toBeVisible();
   }
 
   async search(text: string): Promise<void> {

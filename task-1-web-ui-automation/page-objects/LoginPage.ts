@@ -21,10 +21,10 @@ export class LoginPage extends BasePage {
   }
 
   async pageObjectTests(): Promise<void> {
-    await expect(this.usernameInput).toBeVisible();
-    await expect(this.passwordInput).toBeVisible();
-    await expect(this.loginButton).toBeVisible();
-    await expect(this.gotoUserRegistrationButton).toBeVisible();
+    await expect(this.usernameInput, 'Username input is not visible').toBeVisible();
+    await expect(this.passwordInput, 'Password input is not visible').toBeVisible();
+    await expect(this.loginButton, 'Login button is not visible').toBeVisible();
+    await expect(this.gotoUserRegistrationButton, 'Go to user registration button is not visible').toBeVisible();
   }
 
   async login(username: string, password: string): Promise<void> {

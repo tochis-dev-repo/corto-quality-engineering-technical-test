@@ -21,7 +21,7 @@ export class BooksPage extends BasePage {
   }
 
   async pageObjectTests(): Promise<void> {
-    await expect(this.gotoLoginButton).toBeVisible();
+    await expect(this.gotoLoginButton, 'Go to login button is not visible').toBeVisible();
     await this.bookListingObject.pageObjectTests();
     await this.searchBoxObject.pageObjectTests();
   }

@@ -25,12 +25,12 @@ export class RegisterNewUserPage extends BasePage {
   }
 
   async pageObjectTests(): Promise<void> {
-    await expect(this.firstNameInput).toBeVisible();
-    await expect(this.lastNameInput).toBeVisible();
-    await expect(this.userNameInput).toBeVisible();
-    await expect(this.passwordInput).toBeVisible();
-    await expect(this.registerButton).toBeVisible();
-    await expect(this.backToLoginButton).toBeVisible();
+    await expect(this.firstNameInput, 'First name input is not visible').toBeVisible();
+    await expect(this.lastNameInput, 'Last name input is not visible').toBeVisible();
+    await expect(this.userNameInput, 'User name input is not visible').toBeVisible();
+    await expect(this.passwordInput, 'Password input is not visible').toBeVisible();
+    await expect(this.registerButton, 'Register button is not visible').toBeVisible();
+    await expect(this.backToLoginButton, 'Back to login button is not visible').toBeVisible();
   }
 
   async enterFirstName(firstName: string): Promise<void> {

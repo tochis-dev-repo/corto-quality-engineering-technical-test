@@ -25,12 +25,12 @@ export class BookListingPageObject extends BasePage {
   }
 
   async pageObjectTests(): Promise<void> {
-    await expect(this.table).toBeVisible();
-    await expect(this.previousButton).toBeVisible();
-    await expect(this.nextButton).toBeVisible();
-    await expect(this.titleHeader).toBeVisible();
-    await expect(this.authorHeader).toBeVisible();
-    await expect(this.publisherHeader).toBeVisible();
+    await expect(this.table, 'Book listing table is not visible').toBeVisible();
+    await expect(this.previousButton, 'Previous button is not visible').toBeVisible();
+    await expect(this.nextButton, 'Next button is not visible').toBeVisible();
+    await expect(this.titleHeader, 'Title header is not visible').toBeVisible();
+    await expect(this.authorHeader, 'Author header is not visible').toBeVisible();
+    await expect(this.publisherHeader, 'Publisher header is not visible').toBeVisible();
   }
 
   async clickPreviousButton(): Promise<void> {
@@ -94,6 +94,10 @@ export class BookListingPageObject extends BasePage {
     }
 
     return publishers;
+  }
+
+  async clickOnRow(rowIndex: number): Promise<void> {
+    await this.rows.nth(rowIndex).locator('td').nth(1).click();
   }
 
   async getRowData(rowIndex: number): Promise<{
