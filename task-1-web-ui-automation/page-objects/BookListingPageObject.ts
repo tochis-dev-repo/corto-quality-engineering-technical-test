@@ -19,9 +19,9 @@ export class BookListingPageObject extends BasePage {
     this.nextButton = page.locator('button', { hasText: 'Next' });
     this.rows = page.locator('tbody tr');
 
-    this.titleHeader = page.locator('thead th').nth(1);
-    this.authorHeader = page.locator('thead th').nth(2);
-    this.publisherHeader = page.locator('thead th').nth(3);
+    this.titleHeader = page.locator('thead th', { hasText: 'Title' });
+    this.authorHeader = page.locator('thead th', { hasText: 'Author' });
+    this.publisherHeader = page.locator('thead th', { hasText: 'Publisher' });
   }
 
   async pageObjectTests(): Promise<void> {
