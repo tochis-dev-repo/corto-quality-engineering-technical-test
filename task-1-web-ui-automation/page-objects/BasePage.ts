@@ -1,3 +1,5 @@
+import { config } from 'dotenv';
+config();
 import { Page } from '@playwright/test';
 
 export abstract class BasePage {
