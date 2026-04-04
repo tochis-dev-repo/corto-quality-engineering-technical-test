@@ -21,7 +21,8 @@ export class RegisterNewUserPage extends BasePage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('https://demoqa.com/register');
+    const baseUrl = process.env.BASE_URL ?? 'https://demoqa.com';
+    await this.page.goto(`${baseUrl}/register`);
   }
 
   async pageObjectTests(): Promise<void> {

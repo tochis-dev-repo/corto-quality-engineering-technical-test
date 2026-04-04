@@ -17,7 +17,8 @@ export class LoginPage extends BasePage {
   }
 
   async goto(): Promise<void> {
-    await this.page.goto('https://demoqa.com/login');
+    const baseUrl = process.env.BASE_URL ?? 'https://demoqa.com';
+    await this.page.goto(`${baseUrl}/login`);
   }
 
   async pageObjectTests(): Promise<void> {
