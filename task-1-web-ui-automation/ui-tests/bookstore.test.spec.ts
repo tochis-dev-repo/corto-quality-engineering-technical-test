@@ -41,6 +41,7 @@ test.describe('Book Store Basic Functionality', () => {
     test('Ensure that every book listed has a title, author, and publisher displayed', async ({ page }) => {
         const booksPage = new BooksPage(page);
         await booksPage.goto();
+        await booksPage.bookListingObject.pageObjectTests();
         const numberOfBooks = await booksPage.getNumberOfBooksInList();
         for (let i = 0; i < numberOfBooks; i++) {
             const rowData = await booksPage.bookListingObject.getRowData(i);
