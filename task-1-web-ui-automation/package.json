@@ -1,0 +1,19 @@
+{
+  "name": "task-1-web-ui-automation",
+  "version": "1.0.0",
+  "description": "Web UI automation for Task 1",
+  "scripts": {
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "Tochi Unegbu",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.0",
+    "dotenv": "^16.1.4",
+    "typescript": "^6.0.2"
+  }
+}

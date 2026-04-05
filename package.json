@@ -1,0 +1,29 @@
+{
+  "name": "corto-quality-engineering-technical-test",
+  "version": "1.0.0",
+  "description": "My implementation on a set of pre-defined tasks. The goal is to be able to demonstrate my capacity to perform in excellent fashion, the lead QE role as pre-defined in previous interview sessions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:headed": "playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tochis-dev-repo/corto-quality-engineering-technical-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tochis-dev-repo/corto-quality-engineering-technical-test/issues"
+  },
+  "homepage": "https://github.com/tochis-dev-repo/corto-quality-engineering-technical-test#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}
