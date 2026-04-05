@@ -1,17 +1,13 @@
 {
   "name": "task-1-web-ui-automation",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Web UI automation for Task 1",
   "scripts": {
     "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug",
     "report": "playwright show-report"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tochi Unegbu",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
