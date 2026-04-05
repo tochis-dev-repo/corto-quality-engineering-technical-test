@@ -18,6 +18,7 @@ export const authTestData = {
         password: 'wrongpassword',
       },
       expectedStatus: 200,
+      expectedReason: 'Bad credentials',
     },
     {
       description: 'missing password',
@@ -25,6 +26,7 @@ export const authTestData = {
         username: 'admin',
       },
       expectedStatus: 200,
+      expectedReason: 'Bad credentials',
     },
     {
       description: 'missing username',
@@ -32,19 +34,22 @@ export const authTestData = {
         password: 'password123',
       },
       expectedStatus: 200,
+      expectedReason: 'Bad credentials',
     },
     {
-      description: 'empty auth payload',
+      description: 'empty payload',
       requestBody: {},
       expectedStatus: 200,
+      expectedReason: 'Bad credentials',
     },
     {
-      description: 'invalid credential types',
+      description: 'invalid data types',
       requestBody: {
         username: 123,
         password: true,
       },
       expectedStatus: 200,
+      expectedReason: 'Bad credentials',
     },
   ],
 };

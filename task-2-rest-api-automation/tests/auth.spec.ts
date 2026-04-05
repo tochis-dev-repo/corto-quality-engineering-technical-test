@@ -5,6 +5,7 @@ import { ResponseHelpers } from '../utils/ResponseHelpers';
 import { authTestData } from '../test-data/AuthTestData';
 
 test.describe('Auth API Tests', () => {
+  // ✅ Positive CASES
   authTestData.valid.forEach((testCase) => {
     test(`should create token successfully: ${testCase.description}`, async ({ request }) => {
       const authClient = new AuthClient(request);
@@ -25,9 +26,20 @@ test.describe('Auth API Tests', () => {
         token,
         'Expected token to be present for valid credentials'
       ).toBeTruthy();
+
+      expect(
+        typeof token,
+        'Expected token to be a string'
+      ).toBe('string');
+
+      expect(
+        token.length,
+        'Expected token to be non-empty'
+      ).toBeGreaterThan(0);
     });
   });
 
+  // ❌ Negative CASES
   authTestData.invalid.forEach((testCase) => {
     test(`should handle invalid auth request: ${testCase.description}`, async ({ request }) => {
       const authClient = new AuthClient(request);
@@ -46,8 +58,8 @@ test.describe('Auth API Tests', () => {
 
       expect(
         reason,
-        'Expected failure reason to be present for invalid credentials'
-      ).toBeTruthy();
+        `Expected reason to equal '${testCase.expectedReason}'`
+      ).toBe(testCase.expectedReason);
     });
   });
 });
