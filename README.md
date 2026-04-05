@@ -11,8 +11,15 @@ cd task-1-web-ui-automation
 * Install dependencies
 ```bash
 npm install
-npx playwright install
 ```
+   * For MAC/Windows
+   ```bash
+   npx playwright install
+   ```
+   * For Linux (Codespaces/CI environments)
+   ```bash
+   npx playwright install --with-deps
+   ```
 * Run Tests
 ```bash
 npx playwright test
