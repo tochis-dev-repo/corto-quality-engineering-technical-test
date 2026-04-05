@@ -1,2 +1,8 @@
 # Ignore environment files
 task-1-web-ui-automation/.env
+task-2-rest-api-automation/.env
+
+# Ignore dependencies
+node_modules/
+task-1-web-ui-automation/node_modules/
+task-2-rest-api-automation/node_modules/
