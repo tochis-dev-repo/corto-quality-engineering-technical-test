@@ -6,3 +6,11 @@ task-2-rest-api-automation/.env
 node_modules/
 task-1-web-ui-automation/node_modules/
 task-2-rest-api-automation/node_modules/
+
+# Ignore Playwright artifacts
+playwright-report/
+test-results/
+task-1-web-ui-automation/playwright-report/
+task-1-web-ui-automation/test-results/
+task-2-rest-api-automation/playwright-report/
+task-2-rest-api-automation/test-results/
