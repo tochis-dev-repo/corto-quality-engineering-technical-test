@@ -12,14 +12,12 @@ cd task-1-web-ui-automation
 ```bash
 npm install
 ```
-   * For MAC/Windows
-   ```bash
-   npx playwright install
-   ```
-   * For Linux (Codespaces/CI environments)
-   ```bash
-   npx playwright install --with-deps
-   ```
+* Install Playwright browsers
+```bash
+npx playwright install
+```
+
+If you are running on Linux, make sure the machine or container image already includes Playwright's browser runtime dependencies such as GTK, NSS, X11, GBM, GStreamer, and fonts. The most reliable approach is to preinstall them in the base image or CI environment.
 * Run Tests
 ```bash
 npx playwright test
@@ -89,13 +87,11 @@ cd task-2-rest-api-automation
 ```bash
 npm install
 ```
-   * For MAC/Windows
-   ```bash
-   npx playwright install
-   ```
-   * For Linux (Codespaces/CI environments)
-   ```bash
-   npx playwright install --with-deps
+* No browser installation is required for this task because it only uses Playwright's API testing capabilities.
+* If you want to pin the Playwright browser bundle anyway for consistency across environments, you can run:
+```bash
+npx playwright install
+```
 
 * Run Tests
 ```bash
@@ -164,13 +160,11 @@ cd task-2b-ai-gen-api-automation
 ```bash
 npm install
 ```
-   * For MAC/Windows
-   ```bash
-   npx playwright install
-   ```
-   * For Linux (Codespaces/CI environments)
-   ```bash
-   npx playwright install --with-deps
+* No browser installation is required for this task because it only uses Playwright's API testing capabilities.
+* If you want to pin the Playwright browser bundle anyway for consistency across environments, you can run:
+```bash
+npx playwright install
+```
 
 * Run Tests
 ```bash
