@@ -152,3 +152,71 @@ task-2-rest-api-automation/
 ```
 
 For information on the use of AI on this task, please refer to the notes above - **"Notes"** & **"My AI Philosophy is Simple"**
+
+## Rest API Automation Task 2B - AI Generated 
+
+### Getting Started
+* Navigate to the project
+```bash
+cd task-2b-ai-gen-api-automation
+```
+* Install dependencies
+```bash
+npm install
+```
+   * For MAC/Windows
+   ```bash
+   npx playwright install
+   ```
+   * For Linux (Codespaces/CI environments)
+   ```bash
+   npx playwright install --with-deps
+
+* Run Tests
+```bash
+npx playwright test
+```
+
+* See HTML Report
+```bash
+npx playwright show-report
+```
+### How the code was generated
+I used Google Gemini to generate the code seen in ```ai-generated-auth-api-test.spec.ts```
+
+*  The Prompt Used:
+*  ```bash
+   Generate Playwright API tests in TypeScript for the Restful Booker /auth endpoint. The tests should:
+   Include both positive and negative test scenarios
+   Send a POST request to /auth with username and password
+   Validate the response status
+   For valid credentials, verify a token is returned
+   For invalid credentials, verify a failure message is returned.
+   ```
+### My Thoughts
+#### Strengths (THE GOOD COLUMN)
+*  Correctly interpreted the requirements and implemented both positive and negative scenarios
+*  Correctly interpreted the requirements and implemented both positive and negative scenarios
+*  Required minimal input (no API spec provided) to generate a working solution
+*  Fast turnaround time.
+
+#### Limitations (THE 'COULD BE BETTER' COLUMN)
+*  There was a clear lack of seperation of concerns 
+*  Demonstrated understanding of API testing concepts (status validation, response body checks)
+*  Hard coded values, and no proper frammework structure.
+*  Limited reusability of code
+
+I put my inline comments and suggested improvements in the ```ai-generated-auth-api-test.spec.ts``` code. They are annotated as **QE Notes**
+
+#### Alignment with Framework Implementation
+
+The above limitations were addressed in the main test framework (Part A: ```task-2-rest-api-automation\```), where:
+
+- API interactions are abstracted via reusable client classes (e.g., `AuthClient`)
+- Test data is externalized into structured data files (`AuthTestData.ts`)
+- Assertions are centralized using helper utilities
+- Configuration such as base URL is managed via environment variables
+
+This ensures scalability, maintainability, and consistency across the test suite.
+
+See: ```auth.spec.ts``` for more details.

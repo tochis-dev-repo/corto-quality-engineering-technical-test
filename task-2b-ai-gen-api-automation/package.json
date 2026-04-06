@@ -1,0 +1,15 @@
+{
+  "name": "task-2b-ai-gen-api-automation",
+  "version": "1.0.0",
+  "description": "AI-generated Playwright API automation for Restful Booker auth endpoint",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "keywords": ["playwright", "api", "restful-booker", "auth"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0"
+  }
+}
