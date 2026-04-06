@@ -77,3 +77,78 @@ In practical terms, every AI generated code must be:
 
 I recommend **not granting write access** without permission before any generated code is utilised.
 
+
+## Rest API Automation Task
+
+### Getting Started
+* Navigate to the project
+```bash
+cd task-2-rest-api-automation
+```
+* Install dependencies
+```bash
+npm install
+```
+   * For MAC/Windows
+   ```bash
+   npx playwright install
+   ```
+   * For Linux (Codespaces/CI environments)
+   ```bash
+   npx playwright install --with-deps
+
+* Run Tests
+```bash
+npx playwright test
+```
+
+* See HTML Report
+```bash
+npx playwright show-report
+```
+### Framework General Design
+Just like with the first task, this framework has a strong focus on being scalable, easy to maintain and easy to understand.
+
+It follows a properly layered structure, where we seperate the concerns.
+
+* Test Data Layer
+  *  Test cases are driven by structured data files
+  *  Which contain:
+    *  positive scenarios
+    *  negative scenarios
+    *  Each test case includes:
+      *  description
+      *  request payload
+      *  expected outcomes
+       
+*  Utitlities Layer
+  *  A set of handy methods that support the framework assertions, response handling, and report handling.
+
+*  Tests Layer
+  *  Our different test scenarios are housed here
+
+*  API Client Layer
+  *  Encapsulates all HTTP interactions
+  *  Each domain (e.g., Booking, Auth) has its own client
+  *  Built on top of a shared BaseClient
+  *  Promotes reuse and consistency
+
+### Framework Features
+* These include the following:
+    * Data Driven Testing
+    * Positive and Negative Scenario coverage
+    * API Chaining (data flow between endpoints)
+    * Reusable architecture 
+    * Clear test reporting with useful messaging to enable faster debugging
+ 
+#### Project Structure
+```bash
+task-2-rest-api-automation/
+│
+├── api-clients/
+├── utils/
+├── test-data/
+└── tests/
+```
+
+For information on the use of AI on this task, please refer to the notes above - **"Notes"** & **"My AI Philosophy is Simple"**
