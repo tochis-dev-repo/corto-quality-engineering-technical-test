@@ -8,7 +8,7 @@ export class AssertionHelpers {
   ): void {
     expect(
       response.status(),
-      message || `Expected response status to be ${expectedStatus}`
+      message || `Expected response status to be ${expectedStatus}.`
     ).toBe(expectedStatus);
   }
 
@@ -20,7 +20,7 @@ export class AssertionHelpers {
 
     expect(
       body[field],
-      `Expected response field '${field}' to be defined`
+      `Expected response field '${field}' to be defined.`
     ).toBeDefined();
   }
 
@@ -33,7 +33,7 @@ export class AssertionHelpers {
 
     expect(
       body[field],
-      `Expected response field '${field}' to equal '${expectedValue}'`
+      `Expected response field '${field}' to equal '${expectedValue}'.`
     ).toBe(expectedValue);
   }
 
@@ -46,7 +46,7 @@ export class AssertionHelpers {
     properties.forEach((property) => {
       expect(
         body,
-        `Expected response to have property '${property}'`
+        `Expected response to have property '${property}'.`
       ).toHaveProperty(property);
     });
   }
@@ -59,7 +59,7 @@ export class AssertionHelpers {
 
     expect(
       JSON.stringify(body),
-      `Expected error response to include '${expectedMessage}'`
+      `Expected error response to include '${expectedMessage}'.`
     ).toContain(expectedMessage);
   }
 }

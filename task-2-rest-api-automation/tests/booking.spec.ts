@@ -2,15 +2,23 @@ import { expect, test } from '@playwright/test';
 import { BookingClient, BookingData } from '../api-clients/BookingClient';
 import { AuthClient } from '../api-clients/AuthClient';
 import { AssertionHelpers } from '../utils/AssertionHelpers';
+import { ReportHelpers } from '../utils/ReportHelpers';
 import { ResponseHelpers } from '../utils/ResponseHelpers';
 import { bookingTestData } from '../test-data/BookingTestData';
 import { authTestData } from '../test-data/AuthTestData';
 
 test.describe('Booking API Tests', () => {
-  test('should return booking ids', async ({ request }) => {
+  test('should return booking ids', async ({ request }, testInfo) => {
     const bookingClient = new BookingClient(request);
 
     const response = await bookingClient.getBookingIds();
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-get-ids',
+      null,
+      response
+    );
 
     AssertionHelpers.expectStatus(
       response,
@@ -23,11 +31,18 @@ test.describe('Booking API Tests', () => {
   });
 
   bookingTestData.valid.forEach((testCase) => {
-    test(`should create booking successfully: ${testCase.description}`, async ({ request }) => {
+    test(`should create booking successfully: ${testCase.description}`, async ({ request }, testInfo) => {
       const bookingClient = new BookingClient(request);
 
       const response = await bookingClient.createBooking(
         testCase.requestBody as BookingData
+      );
+
+      await ReportHelpers.attachApiExchange(
+        testInfo,
+        'booking-create-valid',
+        testCase.requestBody,
+        response
       );
 
       AssertionHelpers.expectStatus(
@@ -54,10 +69,17 @@ test.describe('Booking API Tests', () => {
   });
 
   bookingTestData.invalid.forEach((testCase) => {
-    test(`should handle invalid booking creation: ${testCase.description}`, async ({ request }) => {
+    test(`should handle invalid booking creation: ${testCase.description}`, async ({ request }, testInfo) => {
       const bookingClient = new BookingClient(request);
 
       const response = await bookingClient.createBooking(testCase.requestBody as any);
+
+      await ReportHelpers.attachApiExchange(
+        testInfo,
+        'booking-create-invalid',
+        testCase.requestBody,
+        response
+      );
 
       AssertionHelpers.expectStatus(
         response,
@@ -67,11 +89,18 @@ test.describe('Booking API Tests', () => {
     });
   });
 
-  test('should create and retrieve booking by id', async ({ request }) => {
+  test('should create and retrieve booking by id', async ({ request }, testInfo) => {
     const bookingClient = new BookingClient(request);
     const bookingData = bookingTestData.valid[0].requestBody as BookingData;
 
     const createResponse = await bookingClient.createBooking(bookingData);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-create-for-retrieve',
+      bookingData,
+      createResponse
+    );
 
     AssertionHelpers.expectStatus(
       createResponse,
@@ -85,6 +114,13 @@ test.describe('Booking API Tests', () => {
     );
 
     const getResponse = await bookingClient.getBookingById(bookingId);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-get-by-id',
+      { bookingId },
+      getResponse
+    );
 
     AssertionHelpers.expectStatus(
       getResponse,
@@ -111,7 +147,7 @@ test.describe('Booking API Tests', () => {
     ).toBe(bookingData.firstname);
   });
 
-  test('should update an existing booking', async ({ request }) => {
+  test('should update an existing booking', async ({ request }, testInfo) => {
     const authClient = new AuthClient(request);
     const bookingClient = new BookingClient(request);
 
@@ -120,6 +156,13 @@ test.describe('Booking API Tests', () => {
     const updatedBooking = bookingTestData.valid[1].requestBody as BookingData;
 
     const authResponse = await authClient.createToken(validAuth);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-update-auth',
+      validAuth,
+      authResponse
+    );
 
     AssertionHelpers.expectStatus(
       authResponse,
@@ -130,6 +173,13 @@ test.describe('Booking API Tests', () => {
     const token = await ResponseHelpers.getField<string>(authResponse, 'token');
 
     const createResponse = await bookingClient.createBooking(originalBooking);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-update-create-original',
+      originalBooking,
+      createResponse
+    );
 
     AssertionHelpers.expectStatus(
       createResponse,
@@ -146,6 +196,13 @@ test.describe('Booking API Tests', () => {
       bookingId,
       updatedBooking,
       token
+    );
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-update-put',
+      { bookingId, updatedBooking },
+      updateResponse
     );
 
     AssertionHelpers.expectStatus(
@@ -165,7 +222,7 @@ test.describe('Booking API Tests', () => {
     ).toBe(updatedBooking.firstname);
   });
 
-  test('should partially update an existing booking', async ({ request }) => {
+  test('should partially update an existing booking', async ({ request }, testInfo) => {
     const authClient = new AuthClient(request);
     const bookingClient = new BookingClient(request);
 
@@ -179,6 +236,13 @@ test.describe('Booking API Tests', () => {
 
     const authResponse = await authClient.createToken(validAuth);
 
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-partial-update-auth',
+      validAuth,
+      authResponse
+    );
+
     AssertionHelpers.expectStatus(
       authResponse,
       authTestData.valid[0].expectedStatus,
@@ -188,6 +252,13 @@ test.describe('Booking API Tests', () => {
     const token = await ResponseHelpers.getField<string>(authResponse, 'token');
 
     const createResponse = await bookingClient.createBooking(originalBooking);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-partial-update-create-original',
+      originalBooking,
+      createResponse
+    );
 
     AssertionHelpers.expectStatus(
       createResponse,
@@ -204,6 +275,13 @@ test.describe('Booking API Tests', () => {
       bookingId,
       partialUpdateData,
       token
+    );
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-partial-update-patch',
+      { bookingId, partialUpdateData },
+      patchResponse
     );
 
     AssertionHelpers.expectStatus(
@@ -223,7 +301,7 @@ test.describe('Booking API Tests', () => {
     ).toBe(partialUpdateData.firstname);
   });
 
-  test('should delete an existing booking', async ({ request }) => {
+  test('should delete an existing booking', async ({ request }, testInfo) => {
     const authClient = new AuthClient(request);
     const bookingClient = new BookingClient(request);
 
@@ -231,6 +309,13 @@ test.describe('Booking API Tests', () => {
     const bookingData = bookingTestData.valid[0].requestBody as BookingData;
 
     const authResponse = await authClient.createToken(validAuth);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-delete-auth',
+      validAuth,
+      authResponse
+    );
 
     AssertionHelpers.expectStatus(
       authResponse,
@@ -241,6 +326,13 @@ test.describe('Booking API Tests', () => {
     const token = await ResponseHelpers.getField<string>(authResponse, 'token');
 
     const createResponse = await bookingClient.createBooking(bookingData);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-delete-create',
+      bookingData,
+      createResponse
+    );
 
     AssertionHelpers.expectStatus(
       createResponse,
@@ -255,6 +347,13 @@ test.describe('Booking API Tests', () => {
 
     const deleteResponse = await bookingClient.deleteBooking(bookingId, token);
 
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-delete',
+      { bookingId },
+      deleteResponse
+    );
+
     AssertionHelpers.expectStatus(
       deleteResponse,
       201,
@@ -262,6 +361,13 @@ test.describe('Booking API Tests', () => {
     );
 
     const getDeletedBookingResponse = await bookingClient.getBookingById(bookingId);
+
+    await ReportHelpers.attachApiExchange(
+      testInfo,
+      'booking-get-deleted-by-id',
+      { bookingId },
+      getDeletedBookingResponse
+    );
 
     AssertionHelpers.expectStatus(
       getDeletedBookingResponse,

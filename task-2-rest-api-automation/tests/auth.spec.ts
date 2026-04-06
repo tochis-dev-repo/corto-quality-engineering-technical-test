@@ -1,16 +1,23 @@
 import { expect, test } from '@playwright/test';
 import { AuthClient } from '../api-clients/AuthClient';
 import { AssertionHelpers } from '../utils/AssertionHelpers';
+import { ReportHelpers } from '../utils/ReportHelpers';
 import { ResponseHelpers } from '../utils/ResponseHelpers';
 import { authTestData } from '../test-data/AuthTestData';
 
 test.describe('Auth API Tests', () => {
-  // ✅ Positive CASES
   authTestData.valid.forEach((testCase) => {
-    test(`should create token successfully: ${testCase.description}`, async ({ request }) => {
+    test(`should create token successfully: ${testCase.description}`, async ({ request }, testInfo) => {
       const authClient = new AuthClient(request);
 
       const response = await authClient.createToken(testCase.requestBody);
+
+      await ReportHelpers.attachApiExchange(
+        testInfo,
+        'auth-create-token-valid',
+        testCase.requestBody,
+        response
+      );
 
       AssertionHelpers.expectStatus(
         response,
@@ -39,12 +46,18 @@ test.describe('Auth API Tests', () => {
     });
   });
 
-  // ❌ Negative CASES
   authTestData.invalid.forEach((testCase) => {
-    test(`should handle invalid auth request: ${testCase.description}`, async ({ request }) => {
+    test(`should handle invalid auth request: ${testCase.description}`, async ({ request }, testInfo) => {
       const authClient = new AuthClient(request);
 
       const response = await authClient.createToken(testCase.requestBody as any);
+
+      await ReportHelpers.attachApiExchange(
+        testInfo,
+        'auth-create-token-invalid',
+        testCase.requestBody,
+        response
+      );
 
       AssertionHelpers.expectStatus(
         response,
