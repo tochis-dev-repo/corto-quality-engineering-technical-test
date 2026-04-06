@@ -43,7 +43,54 @@ jobs:
           fi
 
       - name: Run Playwright API tests
-        run: npx playwright test
+        id: run-tests
+        continue-on-error: true
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+        run: npx playwright test --reporter=html,json
+
+      - name: Publish test summary
+        if: always()
+        env:
+          WORKFLOW_NAME: Task 2 - Playwright API Tests
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const summaryFile = process.env.GITHUB_STEP_SUMMARY;
+          const resultsPath = 'results.json';
+
+          if (!fs.existsSync(resultsPath)) {
+            fs.appendFileSync(summaryFile, `## ${process.env.WORKFLOW_NAME}\n\nNo Playwright JSON report was generated.\n`);
+            process.exit(0);
+          }
+
+          const report = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+          const stats = report.stats || {};
+          const passed = (stats.expected || 0) + (stats.flaky || 0);
+          const failed = stats.unexpected || 0;
+          const skipped = stats.skipped || 0;
+          const total = passed + failed + skipped;
+          const durationSeconds = Math.round((stats.duration || 0) / 1000);
+
+          const lines = [
+            `## ${process.env.WORKFLOW_NAME}`,
+            '',
+            '| Metric | Count |',
+            '| --- | ---: |',
+            `| Passed | ${passed} |`,
+            `| Failed | ${failed} |`,
+            `| Skipped | ${skipped} |`,
+            `| Total | ${total} |`,
+            '',
+            `Duration: ${durationSeconds}s`,
+          ];
+
+          fs.appendFileSync(summaryFile, `${lines.join('\n')}\n`);
+          EOF
+
+      - name: Fail workflow if tests failed
+        if: steps.run-tests.outcome == 'failure'
+        run: exit 1
 
       - name: Upload Playwright report
         if: always()
